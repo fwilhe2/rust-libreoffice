@@ -24,9 +24,9 @@ jobs:
       matrix:
         include:
           - arch: amd64
-            runner: ubuntu-24.04
+            runner: ubuntu-latest
           - arch: arm64
-            runner: ubuntu-24.04-arm
+            runner: ubuntu-latest-arm
     runs-on: ${{ matrix.runner }}
 
     steps:
@@ -74,7 +74,7 @@ jobs:
   publish-manifest:
     if: github.event_name != 'pull_request'
     needs: build
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Set up Docker Buildx
