@@ -11,6 +11,11 @@ permissions:
   contents: read
   packages: write
 
+env:
+  IMAGE_NAME_ORG: fwilhe2
+  IMAGE_NAME: rust-libreoffice
+  IMAGE_TAG: latest
+
 jobs:
   build:
     strategy:
@@ -22,10 +27,6 @@ jobs:
           - arch: arm64
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
-    env:
-      IMAGE_NAME_ORG: fwilhe2
-      IMAGE_NAME: rust-libreoffice
-      IMAGE_TAG: latest
 
     steps:
       - name: Checkout repo
