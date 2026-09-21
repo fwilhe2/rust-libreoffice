@@ -67,6 +67,22 @@ jobs:
       - name: Print LibreOffice Version
         run: docker run --rm ${{ steps.meta.outputs.tags }} libreoffice --version
 
+      - name: Check bundled tools
+        run: |
+          docker run --rm ${{ steps.meta.outputs.tags }} bash -euc '
+            cargo fmt --version
+            cargo clippy --version
+            reuse --version | head -1
+            jing 2>&1 | head -1
+            pkg-config --modversion gtk4 libadwaita-1
+            wasm-bindgen --version
+            cargo deb --version
+            cargo xwin --version
+            llvm-windres --version | head -1
+            # wine is only installed on amd64
+            if [ "$(dpkg --print-architecture)" = amd64 ]; then wine --version; fi
+          '
+
       - name: Push architecture image
         if: github.event_name != 'pull_request'
         run: docker push ${{ steps.meta.outputs.tags }}
